@@ -3,120 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramadan Relief Fund</title>
+    <title>Ramadan Relief Fund | Abu Hayyan School</title>
     <link rel="stylesheet" href="/css/style.css">
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <div class="brand">🌙 Ramadan Relief 1447AH</div>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                🌙 Ramadan Relief <span>Verified</span>
+            </div>
+            <a href="#" style="color: var(--primary); font-weight: 600; text-decoration: none;">Abu Hayyan School</a>
         </div>
-    </header>
+    </nav>
 
     <div class="container">
-        <h1 class="campaign-title">Ramadan Food Relief for 50 Families</h1>
         
-        <div class="gfm-grid">
-            <div class="main-content">
-                <div class="hero-image">
-                    <img src="/images/banner.jpg" alt="Ramadan Relief Banner" onerror="this.style.backgroundColor='#064e3b'">
-                </div>
+        <main>
+            <h1 class="campaign-title">Ramadan Food Relief for 50 Vulnerable Families</h1>
+            
+            <div class="hero-img">
+                <img src="https://images.unsplash.com/photo-1593113616825-d66722e28ee9?q=80&w=2070&auto=format&fit=crop" alt="Ramadan Food Distribution">
+            </div>
 
-                <div class="organizer">
-                    <div class="organizer-icon">AH</div>
-                    <div>
-                        <strong>Donation handled by</strong><br>
-                        ABU HAYYAN SCHOOL OF SKILLS AND DEEN
-                    </div>
-                </div>
-
-                <div class="story-text">
-                    <p><strong>As-salamu alaykum wa rahmatullahi wa barakatuh,</strong></p>
-                    <br>
-                    <p>As the blessed month of Ramadan approaches, many families in our community are wondering where their Suhoor and Iftar will come from. While we prepare our pantries, our neighbors are struggling with the rising cost of food.</p>
-                    <br>
-                    <p>Our goal is to raise <strong>₦1,000,000</strong> to provide essential food packs (Rice, Beans, Garri, Oil, and Dates) to 50 vulnerable households before the moon is sighted.</p>
-                    <br>
-                    <p>The Prophet (ﷺ) said: <em>"Whoever provides food for a fasting person to break his fast with, then for him is the same reward as his..."</em> (Tirmidhi).</p>
-                    <br>
-                    <p><strong>100% Transparency:</strong> Every Naira donated is tracked live on this page. May Allah accept your Sadaqah.</p>
-                </div>
-
-                <div class="updates-section">
-                    <h3>Donation Feed</h3>
-                    <div id="donationFeed" class="donation-list">
-                        <% donations.forEach(function(d) { %>
-                            <div class="donation-item">
-                                <div class="donor-avatar">❤</div>
-                                <div class="donor-info">
-                                    <div class="donor-name"><%= d.donorName %></div>
-                                    <div class="donor-amount">₦<%= d.amount.toLocaleString() %></div>
-                                    <% if(d.comment) { %>
-                                        <div class="donor-comment"><%= d.comment %></div>
-                                    <% } %>
-                                </div>
-                            </div>
-                        <% }); %>
-                    </div>
+            <div class="organizer-badge">
+                <div class="badge-icon">AH</div>
+                <div>
+                    <div style="font-weight: 700; color: var(--text-dark);">Abu Hayyan School of Skills & Deen</div>
+                    <div style="font-size: 0.9rem; color: var(--text-light);">Organizer <span class="verified-check">✓ Verified Charity</span></div>
                 </div>
             </div>
 
-            <aside class="sticky-sidebar">
-                <div class="donation-card">
-                    <div class="progress-header">
-                        ₦<span id="currentAmount"><%= raised.toLocaleString() %></span>
-                        <span class="goal-text">raised of ₦<%= goal.toLocaleString() %> goal</span>
-                    </div>
+            <div class="story">
+                <p><strong>As-salamu alaykum wa rahmatullahi wa barakatuh,</strong></p>
+                <p>As the blessed month of Ramadan approaches, many families in our community are wondering where their Suhoor and Iftar will come from. While we prepare our pantries, our neighbors are struggling with the rising cost of food.</p>
+                <p>Our goal is to raise <strong>₦1,000,000</strong> to provide essential food packs (Rice, Beans, Garri, Oil, and Dates) to 50 vulnerable households before the moon is sighted.</p>
+                <p>The Prophet (ﷺ) said: <em>"Whoever provides food for a fasting person to break his fast with, then for him is the same reward as his..."</em> (Tirmidhi).</p>
+            </div>
 
-                    <div class="progress-container">
-                        <div id="progressBar" class="progress-fill" style="width: <%= (raised / goal) * 100 %>%"></div>
+            <div class="updates-header">Recent Donations</div>
+            <div id="donationFeed">
+                <% donations.forEach(function(d) { %>
+                    <div class="donation-item">
+                        <div class="donor-icon">❤</div>
+                        <div class="donor-details">
+                            <strong><%= d.donorName %></strong>
+                            <span>Donated ₦<%= d.amount.toLocaleString() %></span>
+                            <% if(d.comment) { %>
+                                <div class="donor-comment"><%= d.comment %></div>
+                            <% } %>
+                        </div>
                     </div>
+                <% }); %>
+            </div>
+        </main>
 
-                    <div style="margin-bottom: 20px; font-weight: bold;">
-                        <span id="donorCount"><%= donations.length %></span> donations
-                    </div>
+        <aside class="sticky-wrapper">
+            <div class="card">
+                <div class="amount-display">₦<span id="amountTxt"><%= raised.toLocaleString() %></span></div>
+                <div class="goal-display">raised of ₦<%= goal.toLocaleString() %> goal</div>
 
-                    <button onclick="openModal()" class="btn-donate">Donate now</button>
-                    <button class="btn-share">Share</button>
-                    
-                    <div style="margin-top: 15px; font-size: 0.8rem; text-align: center; color: #666;">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" height="20" style="vertical-align: middle; margin: 0 5px;">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/MasterCard_Logo.svg" height="20" style="vertical-align: middle; margin: 0 5px;">
-                        Secured by Paystack
-                    </div>
+                <div class="progress-track">
+                    <div id="progressBar" class="progress-fill" style="width: <%= (raised / goal) * 100 %>%"></div>
                 </div>
-            </aside>
-        </div>
+
+                <div style="margin-bottom: 20px;">
+                    <strong><span id="countTxt"><%= donations.length %></span></strong> people have donated
+                </div>
+
+                <button onclick="openModal()" class="btn-donate">Donate now</button>
+                
+                <div class="guarantee">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                    Secure donation via Paystack
+                </div>
+            </div>
+            
+            <button onclick="simulateTest()" style="margin-top:20px; font-size:0.8rem; color:#aaa; background:none; border:none; cursor:pointer;">[Dev: Test Animation]</button>
+        </aside>
+
     </div>
 
-    <div id="paymentModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 style="margin-bottom: 20px;">Make a Contribution</h2>
+    <div id="modal" class="modal-overlay">
+        <div class="modal-box">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 style="margin-bottom: 1.5rem; font-weight: 800;">Make a Donation</h2>
             
-            <div class="preset-amounts">
-                <button class="preset-btn" onclick="setAmount(1000)">₦1,000</button>
-                <button class="preset-btn" onclick="setAmount(5000)">₦5,000</button>
-                <button class="preset-btn" onclick="setAmount(10000)">₦10,000</button>
-            </div>
-
-            <div class="input-group">
-                <input type="number" id="amount" placeholder="Enter amount (₦)">
-            </div>
-            <div class="input-group">
-                <input type="text" id="name" placeholder="Full Name (Optional)">
-            </div>
-            <div class="input-group">
-                <input type="email" id="email" placeholder="Email Address (Required)">
-            </div>
-            <div class="input-group">
-                <textarea id="comment" placeholder="Leave a word of support..." rows="3"></textarea>
-            </div>
-
-            <button class="btn-donate" style="background: #02a95c; color: white;" onclick="payNow()">Continue</button>
+            <input type="number" id="payAmount" class="input-field" placeholder="Amount (₦)" required>
+            <input type="email" id="payEmail" class="input-field" placeholder="Email Address" required>
+            <input type="text" id="payName" class="input-field" placeholder="Your Name (Optional)">
+            <textarea id="payComment" class="input-field" placeholder="Leave a prayer..." rows="3"></textarea>
+            
+            <button onclick="processPayment()" class="btn-donate" style="background: var(--primary); color: white;">Continue to Paystack</button>
         </div>
     </div>
 
@@ -124,72 +105,81 @@
         const publicKey = "<%= publicKey %>";
         const socket = io();
 
-        // 1. LIVE UPDATES
+        // 1. ANIMATE PROGRESS BAR ON LOAD
+        window.onload = () => {
+            const percent = (<%= raised %> / <%= goal %>) * 100;
+            setTimeout(() => { document.getElementById('progressBar').style.width = percent + "%"; }, 500);
+        };
+
+        // 2. LIVE UPDATES LISTENER
         socket.on('new_donation', (data) => {
-            // Update Text
-            document.getElementById('currentAmount').innerText = data.totalRaised.toLocaleString();
+            // Update Numbers
+            document.getElementById('amountTxt').innerText = data.totalRaised.toLocaleString();
             
             // Update Bar
-            const percentage = Math.min((data.totalRaised / <%= goal %>) * 100, 100);
-            document.getElementById('progressBar').style.width = percentage + "%";
+            const percent = (data.totalRaised / <%= goal %>) * 100;
+            document.getElementById('progressBar').style.width = percent + "%";
 
-            // Add to feed
-            const feed = document.getElementById('donationFeed');
-            const newItem = `
-                <div class="donation-item" style="background-color: #f0fdf4;">
-                    <div class="donor-avatar">❤</div>
-                    <div class="donor-info">
-                        <div class="donor-name">${data.donorName}</div>
-                        <div class="donor-amount">₦${data.amount.toLocaleString()}</div>
+            // Add to List
+            const list = document.getElementById('donationFeed');
+            const item = `
+                <div class="donation-item" style="background-color: #ecfdf5; padding: 10px; border-radius: 8px;">
+                    <div class="donor-icon" style="background:white;">✨</div>
+                    <div class="donor-details">
+                        <strong>${data.donorName}</strong>
+                        <span>Just donated ₦${data.amount.toLocaleString()}</span>
                         ${data.comment ? `<div class="donor-comment">${data.comment}</div>` : ''}
                     </div>
-                </div>
-            `;
-            feed.insertAdjacentHTML('afterbegin', newItem);
+                </div>`;
+            list.insertAdjacentHTML('afterbegin', item);
         });
 
-        // 2. MODAL LOGIC
-        function openModal() { document.getElementById('paymentModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('paymentModal').style.display = 'none'; }
-        function setAmount(val) { document.getElementById('amount').value = val; }
+        // 3. PAYMENT FUNCTIONS
+        function openModal() { document.getElementById('modal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
 
-        // 3. PAYMENT LOGIC
-        async function payNow() {
-            const email = document.getElementById('email').value;
-            const amount = document.getElementById('amount').value;
-            const name = document.getElementById('name').value;
-            const comment = document.getElementById('comment').value;
+        async function processPayment() {
+            const amount = document.getElementById('payAmount').value;
+            const email = document.getElementById('payEmail').value;
+            const name = document.getElementById('payName').value;
+            const comment = document.getElementById('payComment').value;
 
-            if(!email || !amount) { alert("Please enter email and amount"); return; }
+            if(!amount || !email) return alert("Please enter amount and email");
 
-            // Create Reference
-            try {
-                const res = await fetch('/donate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, amount, name, comment })
-                });
-                const data = await res.json();
+            // Create Transaction on Server
+            const res = await fetch('/donate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount, email, name, comment })
+            });
+            const data = await res.json();
 
-                // Launch Paystack
-                const handler = PaystackPop.setup({
-                    key: publicKey,
-                    email: email,
-                    amount: amount * 100, // kobo
-                    ref: data.reference,
-                    onClose: () => { alert('Window closed.'); },
-                    callback: (response) => {
-                        closeModal();
-                        // Optional: Redirect to a 'Thank You' page
-                        alert('Alhamdulillah! Payment successful.');
-                    }
-                });
-                handler.openIframe();
+            // Open Paystack
+            const handler = PaystackPop.setup({
+                key: publicKey,
+                email: email,
+                amount: amount * 100, 
+                ref: data.reference,
+                callback: function(response) {
+                    closeModal();
+                    alert("May Allah accept your sadaqah! The bar will update shortly.");
+                }
+            });
+            handler.openIframe();
+        }
 
-            } catch(e) {
-                console.error(e);
-                alert("Something went wrong. Please try again.");
-            }
+        // 4. SIMULATION TOOL (For Testing)
+        function simulateTest() {
+            // This manually triggers the socket event locally to test UI
+            // It does NOT save to database
+            const fakeData = {
+                donorName: "Test Donor",
+                amount: 5000,
+                comment: "Testing the live update feature!",
+                totalRaised: parseInt(document.getElementById('amountTxt').innerText.replace(/,/g,'')) + 5000
+            };
+            // Manually trigger the listener
+            socket._callbacks['$new_donation'][0](fakeData);
         }
     </script>
 </body>
