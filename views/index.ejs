@@ -4,100 +4,406 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ramadan Relief Fund | Abu Hayyan School</title>
-    <link rel="stylesheet" href="/css/style.css">
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 1. CORE VARIABLES (The "Premium" Look) --- */
+        :root {
+            --gfm-green: #02a95c;
+            --gfm-green-hover: #028e4d;
+            --gfm-gold: #fbce06; /* Donate Button Color */
+            --text-black: #2e2e2e;
+            --text-gray: #767676;
+            --bg-page: #ffffff;
+            --border-light: #e8e8e8;
+            --shadow-card: 0 0 20px rgba(0,0,0,0.08);
+            --font-stack: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        /* --- 2. RESET & BASE --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: var(--font-stack); 
+            color: var(--text-black); 
+            background-color: var(--bg-page);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 3. NAVIGATION --- */
+        nav {
+            background: #fff;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-content {
+            max-width: 1120px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .brand {
+            font-weight: bold;
+            color: var(--gfm-green);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .brand span {
+            background: #e6f6ef;
+            color: var(--gfm-green);
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- 4. MAIN LAYOUT GRID --- */
+        .main-container {
+            max-width: 1120px;
+            margin: 40px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1.6fr 1fr; /* 60% Left, 40% Right */
+            gap: 40px;
+        }
+
+        /* --- 5. LEFT COLUMN: CONTENT --- */
+        .campaign-title {
+            font-size: 36px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            color: #111;
+        }
+
+        .media-container {
+            width: 100%;
+            height: 450px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-weight: bold;
+        }
+        .media-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .organizer-row {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 24px;
+            gap: 12px;
+        }
+        .organizer-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--text-black);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .organizer-info div:first-child { font-weight: bold; font-size: 16px; }
+        .organizer-info div:last-child { color: var(--text-gray); font-size: 14px; }
+
+        .story-content {
+            font-size: 18px;
+            color: #444;
+            line-height: 1.7;
+            margin-bottom: 40px;
+        }
+        .story-content p { margin-bottom: 16px; }
+
+        .donations-section h3 {
+            font-size: 22px;
+            font-weight: bold;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 20px;
+        }
+
+        /* Donation List Items */
+        .donation-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        .d-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff6d9; /* Light Gold */
+            color: #b58b00;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .d-info strong { display: block; font-size: 16px; }
+        .d-info span { color: var(--text-gray); font-size: 14px; }
+        .d-msg { 
+            background: #f7f7f7; 
+            padding: 10px; 
+            border-radius: 8px; 
+            margin-top: 5px; 
+            font-size: 14px; 
+            color: #555;
+        }
+
+        /* --- 6. RIGHT COLUMN: STICKY CARD --- */
+        .sticky-column {
+            position: relative;
+        }
+        .donation-card {
+            background: #fff;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-card);
+            border-radius: 12px;
+            padding: 24px;
+            position: sticky;
+            top: 100px; /* Sticks when scrolling */
+        }
+
+        .goal-progress {
+            margin-bottom: 20px;
+        }
+        .amount-large {
+            font-size: 32px;
+            font-weight: 800;
+            color: #111;
+        }
+        .goal-text {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        /* The Bar */
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: #e8e8e8;
+            border-radius: 4px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gfm-green);
+            width: 0%;
+            border-radius: 4px;
+            transition: width 1s ease-out;
+        }
+
+        /* Buttons */
+        .btn-main {
+            width: 100%;
+            background: var(--gfm-gold);
+            color: #111;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: 0.2s;
+            margin-bottom: 12px;
+        }
+        .btn-main:hover { background: #eeca06; transform: translateY(-1px); }
+        
+        .btn-share {
+            width: 100%;
+            background: #e6f6ef;
+            color: var(--gfm-green);
+            font-weight: bold;
+            font-size: 16px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .secure-badge {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        /* --- 7. MODAL (Popup) --- */
+        .modal-wrap {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            align-items: center; justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(2px);
+        }
+        .modal-body {
+            background: #fff;
+            padding: 30px;
+            width: 90%; max-width: 450px;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #999; }
+        
+        .inp-group { margin-bottom: 15px; }
+        .inp-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 6px; }
+        .inp { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; }
+        .inp:focus { outline: 2px solid var(--gfm-green); border-color: transparent; }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .main-container { grid-template-columns: 1fr; }
+            .media-container { height: 250px; }
+            .campaign-title { font-size: 26px; }
+            /* On mobile, card is at bottom, so let's move it up */
+            .sticky-column { order: -1; }
+            .donation-card { position: static; box-shadow: none; border: none; padding: 0; margin-bottom: 30px; }
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
 
     <nav>
-        <div class="nav-container">
-            <div class="logo">
-                🌙 Ramadan Relief <span>Verified</span>
+        <div class="nav-content">
+            <div class="brand">
+                🌙 RAMADAN RELIEF <span>Verified Charity</span>
             </div>
-            <a href="#" style="color: var(--primary); font-weight: 600; text-decoration: none;">Abu Hayyan School</a>
+            <a href="#" style="color:#666; text-decoration:none; font-size:14px; font-weight:600;">ABU HAYYAN SCHOOL</a>
         </div>
     </nav>
 
-    <div class="container">
-        
-        <main>
+    <div class="main-container">
+
+        <div class="left-column">
             <h1 class="campaign-title">Ramadan Food Relief for 50 Vulnerable Families</h1>
-            
-            <div class="hero-img">
-                <img src="https://images.unsplash.com/photo-1593113616825-d66722e28ee9?q=80&w=2070&auto=format&fit=crop" alt="Ramadan Food Distribution">
+
+            <div class="media-container">
+                <img src="https://images.unsplash.com/photo-1532629345422-7515f3d16335?q=80&w=2070&auto=format&fit=crop" 
+                     alt="Ramadan Donation" 
+                     style="opacity: 0.9;">
             </div>
 
-            <div class="organizer-badge">
-                <div class="badge-icon">AH</div>
-                <div>
-                    <div style="font-weight: 700; color: var(--text-dark);">Abu Hayyan School of Skills & Deen</div>
-                    <div style="font-size: 0.9rem; color: var(--text-light);">Organizer <span class="verified-check">✓ Verified Charity</span></div>
+            <div class="organizer-row">
+                <div class="organizer-icon">AH</div>
+                <div class="organizer-info">
+                    <div>Abu Hayyan School of Skills & Deen</div>
+                    <div>is organizing this fundraiser.</div>
                 </div>
             </div>
 
-            <div class="story">
+            <div class="story-content">
                 <p><strong>As-salamu alaykum wa rahmatullahi wa barakatuh,</strong></p>
                 <p>As the blessed month of Ramadan approaches, many families in our community are wondering where their Suhoor and Iftar will come from. While we prepare our pantries, our neighbors are struggling with the rising cost of food.</p>
                 <p>Our goal is to raise <strong>₦1,000,000</strong> to provide essential food packs (Rice, Beans, Garri, Oil, and Dates) to 50 vulnerable households before the moon is sighted.</p>
                 <p>The Prophet (ﷺ) said: <em>"Whoever provides food for a fasting person to break his fast with, then for him is the same reward as his..."</em> (Tirmidhi).</p>
+                <p>We are raising funds to support widows, orphans, and daily wage earners who cannot afford bulk food purchases.</p>
             </div>
 
-            <div class="updates-header">Recent Donations</div>
-            <div id="donationFeed">
-                <% donations.forEach(function(d) { %>
-                    <div class="donation-item">
-                        <div class="donor-icon">❤</div>
-                        <div class="donor-details">
-                            <strong><%= d.donorName %></strong>
-                            <span>Donated ₦<%= d.amount.toLocaleString() %></span>
-                            <% if(d.comment) { %>
-                                <div class="donor-comment"><%= d.comment %></div>
-                            <% } %>
-                        </div>
-                    </div>
-                <% }); %>
-            </div>
-        </main>
-
-        <aside class="sticky-wrapper">
-            <div class="card">
-                <div class="amount-display">₦<span id="amountTxt"><%= raised.toLocaleString() %></span></div>
-                <div class="goal-display">raised of ₦<%= goal.toLocaleString() %> goal</div>
-
-                <div class="progress-track">
-                    <div id="progressBar" class="progress-fill" style="width: <%= (raised / goal) * 100 %>%"></div>
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <strong><span id="countTxt"><%= donations.length %></span></strong> people have donated
-                </div>
-
-                <button onclick="openModal()" class="btn-donate">Donate now</button>
+            <div class="donations-section">
+                <h3>Recent Donations (<%= donations.length %>)</h3>
                 
-                <div class="guarantee">
-                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                    Secure donation via Paystack
+                <div id="feed">
+                    <% donations.forEach(function(d) { %>
+                        <div class="donation-item">
+                            <div class="d-icon">🤲</div>
+                            <div class="d-info">
+                                <strong><%= d.donorName %></strong>
+                                <span>Donated ₦<%= d.amount.toLocaleString() %></span>
+                                <% if(d.comment) { %> <div class="d-msg"><%= d.comment %></div> <% } %>
+                            </div>
+                        </div>
+                    <% }); %>
                 </div>
             </div>
-            
-            <button onclick="simulateTest()" style="margin-top:20px; font-size:0.8rem; color:#aaa; background:none; border:none; cursor:pointer;">[Dev: Test Animation]</button>
-        </aside>
+        </div>
+
+        <div class="sticky-column">
+            <div class="donation-card">
+                <div class="goal-progress">
+                    <div class="amount-large">₦<span id="txtRaised"><%= raised.toLocaleString() %></span></div>
+                    <div class="goal-text">raised of ₦<%= goal.toLocaleString() %> goal</div>
+                    
+                    <div class="progress-bar-bg">
+                        <div id="bar" class="progress-bar-fill" style="width: <%= (raised / goal) * 100 %>%"></div>
+                    </div>
+                    <div style="margin-top: 8px; font-size: 14px; color: #666;">
+                        <span id="txtCount"><%= donations.length %></span> donations
+                    </div>
+                </div>
+
+                <button onclick="openModal()" class="btn-main">Donate now</button>
+                <button class="btn-share">Share</button>
+
+                <div class="secure-badge">
+                    🔒 Secured by Paystack
+                </div>
+            </div>
+        </div>
 
     </div>
 
-    <div id="modal" class="modal-overlay">
-        <div class="modal-box">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 style="margin-bottom: 1.5rem; font-weight: 800;">Make a Donation</h2>
+    <div id="modal" class="modal-wrap">
+        <div class="modal-body">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 style="margin-bottom: 20px; font-size: 24px;">Complete your donation</h2>
             
-            <input type="number" id="payAmount" class="input-field" placeholder="Amount (₦)" required>
-            <input type="email" id="payEmail" class="input-field" placeholder="Email Address" required>
-            <input type="text" id="payName" class="input-field" placeholder="Your Name (Optional)">
-            <textarea id="payComment" class="input-field" placeholder="Leave a prayer..." rows="3"></textarea>
-            
-            <button onclick="processPayment()" class="btn-donate" style="background: var(--primary); color: white;">Continue to Paystack</button>
+            <div class="inp-group">
+                <label>How much would you like to donate?</label>
+                <input type="number" id="amt" class="inp" placeholder="e.g. 5000">
+            </div>
+
+            <div class="inp-group">
+                <label>Email Address</label>
+                <input type="email" id="email" class="inp" placeholder="your@email.com">
+            </div>
+
+            <div class="inp-group">
+                <label>Name (Optional)</label>
+                <input type="text" id="name" class="inp" placeholder="Abu/Umm...">
+            </div>
+
+            <div class="inp-group">
+                <label>Comment (Optional)</label>
+                <input type="text" id="com" class="inp" placeholder="Make a dua...">
+            </div>
+
+            <button onclick="pay()" class="btn-main" style="background: var(--gfm-green); color: white; margin-top: 10px;">Continue to Pay</button>
         </div>
     </div>
 
@@ -105,81 +411,72 @@
         const publicKey = "<%= publicKey %>";
         const socket = io();
 
-        // 1. ANIMATE PROGRESS BAR ON LOAD
+        // 1. Initial Bar Animation
         window.onload = () => {
-            const percent = (<%= raised %> / <%= goal %>) * 100;
-            setTimeout(() => { document.getElementById('progressBar').style.width = percent + "%"; }, 500);
+            setTimeout(() => {
+                document.getElementById('bar').style.width = "<%= (raised / goal) * 100 %>%";
+            }, 300);
         };
 
-        // 2. LIVE UPDATES LISTENER
+        // 2. Real-time Updates
         socket.on('new_donation', (data) => {
-            // Update Numbers
-            document.getElementById('amountTxt').innerText = data.totalRaised.toLocaleString();
+            // Update Text
+            document.getElementById('txtRaised').innerText = data.totalRaised.toLocaleString();
             
             // Update Bar
-            const percent = (data.totalRaised / <%= goal %>) * 100;
-            document.getElementById('progressBar').style.width = percent + "%";
+            const pct = Math.min((data.totalRaised / <%= goal %>) * 100, 100);
+            document.getElementById('bar').style.width = pct + "%";
 
-            // Add to List
-            const list = document.getElementById('donationFeed');
+            // Add to feed
+            const feed = document.getElementById('feed');
             const item = `
-                <div class="donation-item" style="background-color: #ecfdf5; padding: 10px; border-radius: 8px;">
-                    <div class="donor-icon" style="background:white;">✨</div>
-                    <div class="donor-details">
+                <div class="donation-item" style="background-color: #f0fff4; padding: 10px; border-radius: 8px;">
+                    <div class="d-icon">✨</div>
+                    <div class="d-info">
                         <strong>${data.donorName}</strong>
                         <span>Just donated ₦${data.amount.toLocaleString()}</span>
-                        ${data.comment ? `<div class="donor-comment">${data.comment}</div>` : ''}
+                        ${data.comment ? `<div class="d-msg">${data.comment}</div>` : ''}
                     </div>
-                </div>`;
-            list.insertAdjacentHTML('afterbegin', item);
+                </div>
+            `;
+            feed.insertAdjacentHTML('afterbegin', item);
         });
 
-        // 3. PAYMENT FUNCTIONS
+        // 3. Payment Logic
         function openModal() { document.getElementById('modal').style.display = 'flex'; }
         function closeModal() { document.getElementById('modal').style.display = 'none'; }
 
-        async function processPayment() {
-            const amount = document.getElementById('payAmount').value;
-            const email = document.getElementById('payEmail').value;
-            const name = document.getElementById('payName').value;
-            const comment = document.getElementById('payComment').value;
+        async function pay() {
+            const amount = document.getElementById('amt').value;
+            const email = document.getElementById('email').value;
+            const name = document.getElementById('name').value;
+            const comment = document.getElementById('com').value;
 
             if(!amount || !email) return alert("Please enter amount and email");
 
-            // Create Transaction on Server
-            const res = await fetch('/donate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ amount, email, name, comment })
-            });
-            const data = await res.json();
+            try {
+                // Get Ref
+                const res = await fetch('/donate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount, email, name, comment })
+                });
+                const data = await res.json();
 
-            // Open Paystack
-            const handler = PaystackPop.setup({
-                key: publicKey,
-                email: email,
-                amount: amount * 100, 
-                ref: data.reference,
-                callback: function(response) {
-                    closeModal();
-                    alert("May Allah accept your sadaqah! The bar will update shortly.");
-                }
-            });
-            handler.openIframe();
-        }
+                // Paystack
+                const handler = PaystackPop.setup({
+                    key: publicKey,
+                    email: email,
+                    amount: amount * 100,
+                    ref: data.reference,
+                    callback: function(response) {
+                        closeModal();
+                        alert("JazakAllahu Khairan! Your donation is processing.");
+                    }
+                });
+                handler.openIframe();
 
-        // 4. SIMULATION TOOL (For Testing)
-        function simulateTest() {
-            // This manually triggers the socket event locally to test UI
-            // It does NOT save to database
-            const fakeData = {
-                donorName: "Test Donor",
-                amount: 5000,
-                comment: "Testing the live update feature!",
-                totalRaised: parseInt(document.getElementById('amountTxt').innerText.replace(/,/g,'')) + 5000
-            };
-            // Manually trigger the listener
-            socket._callbacks['$new_donation'][0](fakeData);
+            } catch(e) { console.error(e); alert("Connection error."); }
         }
     </script>
 </body>
