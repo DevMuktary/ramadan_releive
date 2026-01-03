@@ -3,118 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramadan Relief Fund</title>
+    <title>Ramadan Relief 1447AH | Abu Hayyan School</title>
     <link rel="stylesheet" href="/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
 
     <nav>
-        <div class="nav-content">
-            <span>🌙 Ramadan Relief</span>
+        <div class="nav-inner">
+            <span>🌙 Ramadan Relief Fund</span>
         </div>
     </nav>
 
     <div class="container">
         
-        <div class="main-column">
-            <div class="hero-section">
-                <img src="/images/banner.jpg" class="hero-img" alt="Ramadan Relief" onerror="this.src='https://images.unsplash.com/photo-1593113616825-d66722e28ee9?w=1000&q=80'">
+        <main>
+            <div class="hero-image-container">
+                <img src="/images/banner.jpg" alt="Ramadan Food Distribution" onerror="this.src='https://images.unsplash.com/photo-1593113616825-d66722e28ee9?w=1200&q=80'">
             </div>
 
-            <div class="mobile-progress-section" id="mobileProgress">
-                <div class="progress-stats" style="margin-top: 20px;">
-                    <div class="amount-big">₦<span class="live-amount"><%= raised.toLocaleString() %></span></div>
-                    <div class="goal-small">raised of ₦<%= goal.toLocaleString() %> goal</div>
-                </div>
-                <div class="progress-track">
-                    <div class="progress-fill live-bar" style="width: <%= (raised / goal) * 100 %>%"></div>
-                </div>
+            <div class="mobile-progress-wrapper" style="display:none;">
+                 <div class="amount-large">₦<span class="live-amt"><%= raised.toLocaleString() %></span></div>
+                 <div class="goal-text">raised of ₦<%= goal.toLocaleString() %> goal</div>
+                 <div class="progress-container">
+                    <div class="progress-bar live-bar" style="width: <%= (raised / goal) * 100 %>%"></div>
+                 </div>
             </div>
-
-            <h1 class="campaign-title">Ramadan Food Relief for 50 Families</h1>
             
-            <div class="organizer">
-                <div class="org-avatar">AH</div>
-                <div>
-                    <strong>Abu Hayyan School</strong><br>
-                    <span style="font-size: 0.9rem; color: #64748b;">Organizer &middot; Lagos, Nigeria</span>
+            <script>
+                // Simple script to toggle mobile progress display
+                if(window.innerWidth <= 850) { document.querySelector('.mobile-progress-wrapper').style.display = 'block'; }
+            </script>
+
+            <h1 class="campaign-title">Ramadan Food Relief for 50 Vulnerable Families</h1>
+
+            <div class="organizer-bar">
+                <div class="org-icon">AH</div>
+                <div class="org-info">
+                    <div>Abu Hayyan School of Skills & Deen</div>
+                    <div>Organizer &middot; Lagos, Nigeria</div>
                 </div>
             </div>
 
-            <div class="content-area">
-                <div class="story-text">
-                    <p><strong>As-salamu alaykum,</strong></p>
-                    <p>As Ramadan approaches, many in our community face empty tables. Our goal is simple: Feed 50 families before the first Suhoor.</p>
-                    <br>
-                    <p>Your donation provides: Rice, Beans, Oil, and Dates. Every Naira is tracked live here.</p>
-                </div>
+            <div class="story-content">
+                <p><strong>As-salamu alaykum wa rahmatullahi wa barakatuh,</strong></p>
 
-                <div class="feed-header">Latest Donations (<span id="countTxt"><%= donations.length %></span>)</div>
+                <p>Imagine the sun setting after a long day of fasting. You reach for a date and a glass of water, grateful for the meal ahead. Now, imagine a mother in our community watching the same sun set, but with a heavy heart, knowing she has nothing to place before her children for Iftar.</p>
+
+                <p>This reality is becoming all too common. With the rising cost of food in Nigeria, many families who were once getting by are now struggling to afford even the basics. The joy of Ramadan—the month of mercy—is being overshadowed by the anxiety of hunger.</p>
+
+                <h3>Our Mission</h3>
+                <p>This Ramadan, <strong>Abu Hayyan School of Skills and Deen</strong> has launched an urgent initiative to support 50 vulnerable families in our locality. We are not just raising money; we are raising hope.</p>
+
+                <p>Our target is <strong>₦1,000,000</strong>. This will allow us to purchase and distribute comprehensive Food Relief Packs before the first moon is sighted. Each pack is carefully curated to last a family for the majority of the month.</p>
+
+                <h3>What Each Pack Contains:</h3>
+                <ul>
+                    <li>🍚 <strong>Rice & Beans:</strong> The staple for strength.</li>
+                    <li>🥣 <strong>Garri:</strong> For Sahur and quick meals.</li>
+                    <li>🍾 <strong>Vegetable Oil:</strong> Essential for cooking.</li>
+                    <li>🥛 <strong>Milk & Sugar:</strong> For pap and tea.</li>
+                    <li>🌴 <strong>Dates:</strong> To break the fast in accordance with the Sunnah.</li>
+                </ul>
+                <br>
+                
+                <h3>The Reward is Waiting</h3>
+                <p>The Prophet Muhammad (ﷺ) said: <em>"Whoever provides food for a fasting person to break his fast with, then for him is the same reward as his (the fasting person), without anything being diminished from the reward of the fasting person."</em> (Tirmidhi)</p>
+
+                <p>Every Naira you donate here is tracked live. Whether you give ₦500 or ₦50,000, your contribution will go directly into a pot intended to feed a believer.</p>
+
+                <p><strong>Please donate whatever you can and share this link. May Allah accept your Sadaqah and multiply it in this world and the Hereafter.</strong></p>
+            </div>
+
+            <div class="feed-section">
+                <div class="feed-title">Recent Donations (<span id="count"><%= donations.length %></span>)</div>
                 <div id="donationFeed">
                     <% donations.forEach(function(d) { %>
-                        <div class="donation-item">
-                            <div class="d-icon">❤</div>
-                            <div class="d-info">
+                        <div class="donation-row">
+                            <div class="donor-avatar">❤</div>
+                            <div class="donor-meta">
                                 <strong><%= d.donorName %></strong>
-                                <span>₦<%= d.amount.toLocaleString() %> &middot; <%= d.comment || 'Ramadan Mubarak' %></span>
+                                <span>₦<%= d.amount.toLocaleString() %></span>
+                                <% if(d.comment) { %>
+                                    <div class="donor-msg"><%= d.comment %></div>
+                                <% } %>
                             </div>
                         </div>
                     <% }); %>
                 </div>
             </div>
-        </div>
+        </main>
 
-        <div class="sidebar">
+        <aside class="sticky-column">
             <div class="donation-card">
-                <div class="progress-stats">
-                    <div class="amount-big">₦<span class="live-amount"><%= raised.toLocaleString() %></span></div>
-                    <div class="goal-small">raised of ₦<%= goal.toLocaleString() %> goal</div>
-                </div>
-                <div class="progress-track">
-                    <div class="progress-fill live-bar" style="width: <%= (raised / goal) * 100 %>%"></div>
-                </div>
+                <div class="amount-large">₦<span class="live-amt"><%= raised.toLocaleString() %></span></div>
+                <div class="goal-text">raised of ₦<%= goal.toLocaleString() %> goal</div>
                 
-                <button onclick="openModal()" class="btn-main">Donate Now</button>
-                
-                <div style="text-align: center; margin-top: 15px; font-size: 0.8rem; color: #64748b;">
-                    🔒 Secured by Paystack
+                <div class="progress-container">
+                    <div class="progress-bar live-bar" style="width: <%= (raised / goal) * 100 %>%"></div>
+                </div>
+
+                <div style="margin-bottom: 20px; font-weight: 600;">
+                    <span id="countSidebar"><%= donations.length %></span> donations
+                </div>
+
+                <button onclick="openModal()" class="btn-donate">Donate now</button>
+                <div style="text-align: center; margin-top: 15px; font-size: 0.85rem; color: #6b7280;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" height="14" style="margin-right:5px;">
+                    Secured by Paystack
                 </div>
             </div>
-        </div>
+        </aside>
 
     </div>
 
-    <div class="mobile-sticky-footer">
-        <div class="mobile-stats">
-            Raised: ₦<span class="live-amount"><%= raised.toLocaleString() %></span>
+    <div class="mobile-footer">
+        <div class="mobile-footer-text">
+            Raised: ₦<span class="live-amt"><%= raised.toLocaleString() %></span>
         </div>
-        <button onclick="openModal()" class="mobile-btn">Donate Now</button>
+        <button onclick="openModal()" class="mobile-donate-btn">Donate Now</button>
     </div>
 
-    <div id="paymentModal" class="modal-overlay">
-        <div class="modal-box">
-            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                <h2 style="font-weight:800;">Donate</h2>
-                <span onclick="closeModal()" style="cursor:pointer; font-size:1.5rem;">&times;</span>
+    <div id="modal" class="modal-overlay">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; margin-bottom: 20px;">
+                <h2 style="font-weight: 800;">Make a Donation</h2>
+                <span onclick="closeModal()" style="font-size: 24px; cursor: pointer;">&times;</span>
             </div>
             
-            <div class="input-group">
-                <input type="number" id="amt" placeholder="Amount (e.g. 5000)" required>
-            </div>
-            <div class="input-group">
-                <input type="email" id="email" placeholder="Email Address" required>
-            </div>
-            <div class="input-group">
-                <input type="text" id="name" placeholder="Name (Optional)">
-            </div>
-            <div class="input-group">
-                <textarea id="comment" placeholder="Leave a prayer (Optional)"></textarea>
-            </div>
+            <input type="number" id="payAmount" class="input-field" placeholder="Amount (e.g., 5000)" required>
+            <input type="email" id="payEmail" class="input-field" placeholder="Email Address" required>
+            <input type="text" id="payName" class="input-field" placeholder="Full Name (Optional)">
+            <textarea id="payComment" class="input-field" placeholder="Leave a prayer or comment..." rows="3"></textarea>
             
-            <button onclick="pay()" class="btn-main" style="background: var(--primary); color: white;">Proceed to Pay</button>
+            <button onclick="pay()" class="btn-donate" style="background: var(--primary); color: white;">Proceed to Pay</button>
         </div>
     </div>
 
@@ -122,42 +145,44 @@
         const publicKey = "<%= publicKey %>";
         const socket = io();
 
-        function openModal() { document.getElementById('paymentModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('paymentModal').style.display = 'none'; }
+        function openModal() { document.getElementById('modal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
 
         // LIVE UPDATES
         socket.on('new_donation', (data) => {
-            // Update all amounts on page (Desktop sidebar + Mobile footer + Mobile in-content)
-            document.querySelectorAll('.live-amount').forEach(el => {
-                el.innerText = data.totalRaised.toLocaleString();
-            });
-
-            // Update all progress bars
+            // Update Amounts
+            document.querySelectorAll('.live-amt').forEach(el => el.innerText = data.totalRaised.toLocaleString());
+            
+            // Update Bars
             const percent = (data.totalRaised / <%= goal %>) * 100;
-            document.querySelectorAll('.live-bar').forEach(el => {
-                el.style.width = percent + "%";
-            });
+            document.querySelectorAll('.live-bar').forEach(el => el.style.width = percent + "%");
 
-            // Add to feed
+            // Update Counts
+            const newCount = parseInt(document.getElementById('count').innerText) + 1;
+            document.getElementById('count').innerText = newCount;
+            if(document.getElementById('countSidebar')) document.getElementById('countSidebar').innerText = newCount;
+
+            // Add to Feed
             const feed = document.getElementById('donationFeed');
             const item = `
-                <div class="donation-item" style="background-color: #f0fdf4;">
-                    <div class="d-icon">✨</div>
-                    <div class="d-info">
+                <div class="donation-row" style="background-color: #f0fdf4; padding: 10px; border-radius: 8px;">
+                    <div class="donor-avatar">✨</div>
+                    <div class="donor-meta">
                         <strong>${data.donorName}</strong>
-                        <span>₦${data.amount.toLocaleString()} &middot; ${data.comment || 'Just now'}</span>
+                        <span>₦${data.amount.toLocaleString()}</span>
+                        ${data.comment ? `<div class="donor-msg">${data.comment}</div>` : ''}
                     </div>
                 </div>`;
             feed.insertAdjacentHTML('afterbegin', item);
         });
 
         async function pay() {
-            const amount = document.getElementById('amt').value;
-            const email = document.getElementById('email').value;
-            const name = document.getElementById('name').value;
-            const comment = document.getElementById('comment').value;
+            const amount = document.getElementById('payAmount').value;
+            const email = document.getElementById('payEmail').value;
+            const name = document.getElementById('payName').value;
+            const comment = document.getElementById('payComment').value;
 
-            if(!amount || !email) return alert("Amount and Email are required");
+            if(!amount || !email) return alert("Please enter Amount and Email");
 
             const res = await fetch('/donate', {
                 method: 'POST',
@@ -173,7 +198,7 @@
                 ref: data.reference,
                 callback: function() {
                     closeModal();
-                    alert("Alhamdulillah! Donation successful.");
+                    alert("JazakAllahu Khairan! Donation successful.");
                 }
             });
             handler.openIframe();
