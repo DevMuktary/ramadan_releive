@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan Relief Fundraising</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .islamic-font { font-family: 'Amiri', serif; }
+        .pattern-bg {
+            background-image: url("https://www.transparenttextures.com/patterns/arabesque.png");
+            background-color: #064e3b; 
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <div class="pattern-bg text-white py-12 px-4 text-center relative overflow-hidden">
+        <div class="max-w-2xl mx-auto relative z-10">
+            <h1 class="islamic-font text-4xl md:text-5xl font-bold mb-4 text-yellow-400">Ramadan Relief 1447AH</h1>
+            <p class="text-lg md:text-xl text-emerald-100 italic">"Feed a Family, Earn the Reward"</p>
+        </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto -mt-8 px-4 relative z-20 pb-20">
+        
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8 border border-emerald-100">
+            <div class="flex justify-between items-end mb-2">
+                <span class="text-3xl font-bold text-emerald-700">₦<span id="currentAmount"><%= raised.toLocaleString() %></span></span>
+                <span class="text-sm text-gray-500">raised of ₦<%= goal.toLocaleString() %></span>
+            </div>
+            
+            <div class="w-full bg-gray-200 rounded-full h-4 mb-4">
+                <div id="progressBar" class="bg-emerald-500 h-4 rounded-full transition-all duration-1000 ease-out" 
+                     style="width: <%= (raised / goal) * 100 %>%"></div>
+            </div>
+
+            <div class="text-center mt-6">
+                <button onclick="openModal()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 px-10 rounded-full shadow-md transition transform hover:-translate-y-1 text-lg">
+                    Donate Now with Paystack
+                </button>
+            </div>
+        </div>
+
+        <div class="prose max-w-none mb-10 text-gray-600">
+            <p class="mb-4">As the blessed month of Ramadan approaches, many families in our community are wondering where their Suhoor and Iftar will come from.</p>
+            <p class="mb-4">Our goal is to raise <strong>₦1,000,000</strong> to provide essential food packs (Rice, Beans, Garri, Oil, and Dates) to 50 vulnerable households.</p>
+        </div>
+
+        <h3 class="islamic-font text-2xl font-bold text-center mb-6 text-emerald-800">Wall of Kindness</h3>
+        <div id="donationFeed" class="space-y-3">
+            <% donations.forEach(function(d) { %>
+                <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-emerald-500 flex justify-between items-center animate-fade">
+                    <div>
+                        <p class="font-bold text-gray-800"><%= d.donorName %></p>
+                        <% if(d.comment) { %> <p class="text-sm text-gray-500 italic">"<%= d.comment %>"</p> <% } %>
+                    </div>
+                    <div class="text-emerald-600 font-bold">
+                        +₦<%= d.amount.toLocaleString() %>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center px-4">
+        <div class="bg-white rounded-lg max-w-md w-full p-6">
+            <div class="flex justify-between mb-4">
+                <h3 class="font-bold text-lg">Make a Donation</h3>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-red-500">&times;</button>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="grid grid-cols-3 gap-2 mb-2">
+                    <button onclick="setAmount(1000)" class="border p-2 rounded hover:bg-emerald-50 text-sm">₦1,000</button>
+                    <button onclick="setAmount(5000)" class="border p-2 rounded hover:bg-emerald-50 text-sm">₦5,000</button>
+                    <button onclick="setAmount(10000)" class="border p-2 rounded hover:bg-emerald-50 text-sm">₦10,000</button>
+                </div>
+                
+                <input type="number" id="amount" placeholder="Amount (₦)" class="w-full border p-3 rounded" required>
+                <input type="text" id="name" placeholder="Your Name (Optional)" class="w-full border p-3 rounded">
+                <input type="email" id="email" placeholder="Email Address" class="w-full border p-3 rounded" required>
+                <textarea id="comment" placeholder="Leave a prayer/comment (Optional)" class="w-full border p-3 rounded h-20"></textarea>
+                
+                <button onclick="payNow()" class="w-full bg-emerald-600 text-white font-bold py-3 rounded hover:bg-emerald-700">
+                    Pay Securely
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const publicKey = "<%= publicKey %>";
+        const socket = io();
+
+        // Socket Listener (The Magic Live Update)
+        socket.on('new_donation', (data) => {
+            // Update Total
+            document.getElementById('currentAmount').innerText = data.totalRaised.toLocaleString();
+            
+            // Update Progress Bar
+            const percentage = (data.totalRaised / <%= goal %>) * 100;
+            document.getElementById('progressBar').style.width = percentage + "%";
+
+            // Add new donation to feed
+            const feed = document.getElementById('donationFeed');
+            const newCard = `
+                <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-yellow-400 flex justify-between items-center animate-fade bg-yellow-50 transition duration-500">
+                    <div>
+                        <p class="font-bold text-gray-800">${data.donorName}</p>
+                        ${data.comment ? `<p class="text-sm text-gray-500 italic">"${data.comment}"</p>` : ''}
+                    </div>
+                    <div class="text-emerald-600 font-bold">+₦${data.amount.toLocaleString()}</div>
+                </div>
+            `;
+            feed.insertAdjacentHTML('afterbegin', newCard);
+        });
+
+        // Payment Logic
+        function setAmount(val) { document.getElementById('amount').value = val; }
+        function openModal() { document.getElementById('paymentModal').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('paymentModal').classList.add('hidden'); }
+
+        async function payNow() {
+            const email = document.getElementById('email').value;
+            const amount = document.getElementById('amount').value;
+            const name = document.getElementById('name').value;
+            const comment = document.getElementById('comment').value;
+
+            if(!email || !amount) return alert("Please fill in amount and email");
+
+            // 1. Get Reference from Backend
+            const res = await fetch('/donate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, amount, name, comment })
+            });
+            const data = await res.json();
+
+            // 2. Open Paystack
+            const handler = PaystackPop.setup({
+                key: publicKey,
+                email: email,
+                amount: amount * 100, // Paystack is in Kobo
+                ref: data.reference,
+                onClose: function(){ alert('Transaction was not completed.'); },
+                callback: function(response){
+                    closeModal();
+                    alert('JazakAllahu Khairan! Your donation is being verified and will appear shortly.');
+                }
+            });
+            handler.openIframe();
+        }
+    </script>
+</body>
+</html>
