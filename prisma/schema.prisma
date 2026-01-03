@@ -1,0 +1,21 @@
+// inside prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Donation {
+  id        Int      @id @default(autoincrement())
+  donorName String   @default("Anonymous")
+  amount    Float
+  email     String?
+  comment   String?
+  reference String   @unique
+  status    String   @default("pending") // pending, success, failed
+  createdAt DateTime @default(now())
+}
