@@ -182,7 +182,6 @@
             return "Just now";
         }
 
-        // Run on load to format existing dates
         document.addEventListener("DOMContentLoaded", () => {
             document.querySelectorAll('.time-ago').forEach(el => {
                 const raw = el.getAttribute('data-time');
