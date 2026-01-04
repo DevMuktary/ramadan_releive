@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramadan Relief Fund</title>
+    <title>Ramadan Relief Fund - Abu Hayyan</title>
+    
+    <meta property="og:title" content="Ramadan Relief Fund - Managed by Abu Hayyan" />
+    <meta property="og:description" content="We are raising funds to support widows and orphans this Ramadan. No amount is too small. Join me in this Sadaqah." />
+    <meta property="og:image" content="https://<%= host %>/images/banner.png" /> 
+    <meta property="og:url" content="https://<%= host %>" />
+    <meta property="og:type" content="website" />
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <script src="https://js.paystack.co/v1/inline.js"></script>
@@ -35,11 +42,11 @@
                 </div>
 
                 <div class="share-grid">
-                    <a href="https://wa.me/?text=Let's%20support%20the%20Ramadan%20Relief%20Fund%20to%20feed%20the%20needy.%20Every%20Naira%20counts.%20Donate%20securely%20here:%20https://<%= host %>" target="_blank" class="btn-share btn-whatsapp">
+                    <a href="https://wa.me/?text=Let's%20support%20the%20Ramadan%20Relief%20Fund%20by%20Abu%20Hayyan%20to%20feed%20the%20needy.%20Every%20Naira%20counts.%20Donate%20securely%20here:%20https://<%= host %>" target="_blank" class="btn-share btn-whatsapp">
                         <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592z"/></svg>
                         Share to WhatsApp
                     </a>
-                    <a href="https://wa.me/?text=Assalamualaikum.%20I%20am%20supporting%20this%20Ramadan%20Relief%20Fund%20for%20widows%20and%20orphans.%20Please%20join%20me.%20https://<%= host %>" target="_blank" class="btn-share btn-status">
+                    <a href="https://wa.me/?text=Assalamualaikum.%20I%20am%20supporting%20this%20Ramadan%20Relief%20Fund%20managed%20by%20Abu%20Hayyan.%20Please%20join%20me.%20https://<%= host %>" target="_blank" class="btn-share btn-status">
                         <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.646 5.646L7 10.293 4.354 7.646a.5.5 0 1 1 .708-.708l2 2 4-4a.5.5 0 0 1 .708.708z"/></svg>
                         Add to Status
                     </a>
@@ -58,6 +65,10 @@
                 <p><strong>No amount is too small.</strong> Whether it’s ₦100, ₦500, or ₦1,000 daily before or during Ramadan, it counts and will make a difference.</p>
                 
                 <p>I will also reach out to some people offline and online, in shā’ Allāh. Can you do that too? So let us begin.</p>
+                
+                <p style="margin-top: 30px; font-weight: 700; color: var(--primary); font-size: 1.1rem; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+                    — Managed by Abu Hayyan
+                </p>
             </div>
 
             <div class="feed-container">
@@ -97,36 +108,54 @@
 
     <div id="modal" class="modal-overlay">
         <div class="modal-box">
-            <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
-                <h3 style="font-weight:800; font-size:1.3rem; color:var(--primary)">Make a Contribution</h3>
-                <span onclick="closeModal()" style="font-size:28px; cursor:pointer; color:#94a3b8">&times;</span>
+            
+            <div id="donation-form">
+                <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
+                    <h3 style="font-weight:800; font-size:1.3rem; color:var(--primary)">Make a Contribution</h3>
+                    <span onclick="closeModal()" style="font-size:28px; cursor:pointer; color:#94a3b8">&times;</span>
+                </div>
+
+                <div class="preset-grid">
+                    <div class="btn-preset" onclick="setPreset(1000, this)">₦1,000</div>
+                    <div class="btn-preset" onclick="setPreset(2000, this)">₦2,000</div>
+                    <div class="btn-preset" onclick="setPreset(5000, this)">₦5,000</div>
+                    <div class="btn-preset" onclick="setPreset(10000, this)">₦10,000</div>
+                </div>
+
+                <div class="inp-group">
+                    <input type="text" inputmode="numeric" pattern="[0-9]*" id="amt" class="inp" placeholder="Other amount (₦)" required>
+                </div>
+                <div class="inp-group">
+                    <input type="email" id="email" class="inp" placeholder="Email Address (Required)" required>
+                </div>
+                <div class="inp-group">
+                    <input type="text" id="name" class="inp" placeholder="Your Name (Optional)">
+                </div>
+                <div class="inp-group">
+                    <input type="text" id="comment" class="inp" placeholder="Leave a prayer (Optional)">
+                </div>
+
+                <button onclick="pay()" class="btn-pay">DONATE NOW</button>
+                
+                <div style="text-align:center; font-size:0.8rem; color:#64748b; margin-top:15px; border-top:1px solid #f1f5f9; padding-top:10px;">
+                    <p>Managed by Abu Hayyan. 100% of funds go to beneficiaries.</p>
+                    <div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-top:5px;">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/></svg>
+                        Secure payment via Paystack
+                    </div>
+                </div>
             </div>
 
-            <div class="preset-grid">
-                <div class="btn-preset" onclick="setPreset(1000, this)">₦1,000</div>
-                <div class="btn-preset" onclick="setPreset(2000, this)">₦2,000</div>
-                <div class="btn-preset" onclick="setPreset(5000, this)">₦5,000</div>
-                <div class="btn-preset" onclick="setPreset(10000, this)">₦10,000</div>
+            <div id="success-message" style="display:none; text-align:center; padding:20px;">
+                <div style="font-size:60px; margin-bottom:15px;">🎉</div>
+                <h3 style="color:var(--primary); font-weight:800; font-size:1.6rem; margin-bottom:10px;">JazaakAllahu Khairan!</h3>
+                <p style="color:#475569; font-size:1.05rem; line-height:1.5;">May Allah accept your sadaqah, purify your wealth, and grant you ease in this life and the hereafter.</p>
+                <div style="margin-top:25px; padding:15px; background:var(--primary-light); border-radius:12px;">
+                    <p style="font-weight:700; color:var(--primary);">Managed by Abu Hayyan</p>
+                </div>
+                <button onclick="closeModal()" class="btn-preset" style="margin-top:20px; width:100%; background:var(--bg-gray);">Close Window</button>
             </div>
 
-            <div class="inp-group">
-                <input type="number" id="amt" class="inp" placeholder="Other amount (₦)" required>
-            </div>
-            <div class="inp-group">
-                <input type="email" id="email" class="inp" placeholder="Email Address (Required)" required>
-            </div>
-            <div class="inp-group">
-                <input type="text" id="name" class="inp" placeholder="Your Name (Optional)">
-            </div>
-            <div class="inp-group">
-                <input type="text" id="comment" class="inp" placeholder="Leave a prayer (Optional)">
-            </div>
-
-            <button onclick="pay()" class="btn-pay">DONATE NOW</button>
-            <div style="text-align:center; font-size:0.85rem; color:#64748b; margin-top:15px; display:flex; align-items:center; justify-content:center; gap:6px;">
-                <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/></svg>
-                Secure payment via Paystack
-            </div>
         </div>
     </div>
 
@@ -134,7 +163,12 @@
         const publicKey = "<%= publicKey %>";
         const socket = io();
 
-        function openModal() { document.getElementById('modal').style.display = 'flex'; }
+        function openModal() { 
+            // Reset modal state when opening
+            document.getElementById('modal').style.display = 'flex'; 
+            document.getElementById('donation-form').style.display = 'block';
+            document.getElementById('success-message').style.display = 'none';
+        }
         function closeModal() { document.getElementById('modal').style.display = 'none'; }
         
         function setPreset(amount, btn) {
@@ -143,7 +177,6 @@
             btn.classList.add('active');
         }
 
-        // UPDATED LIVE INJECTION SCRIPT
         socket.on('new_donation', (data) => {
             document.querySelectorAll('.live-amt').forEach(el => el.innerText = "₦" + data.totalRaised.toLocaleString());
             document.querySelectorAll('.live-bar').forEach(el => el.style.width = ((data.totalRaised / <%= goal %>) * 100) + "%");
@@ -152,7 +185,6 @@
             count.innerText = parseInt(count.innerText) + 1;
 
             const feed = document.getElementById('donationFeed');
-            // New HTML structure for live items
             const item = `
                 <div class="donation-item" style="background-color: var(--primary-light); border-radius:12px; padding: 15px;">
                     <div class="d-icon-box" style="background:white;">
@@ -160,7 +192,7 @@
                     </div>
                     <div class="d-info">
                         <span class="d-name">${data.donorName}</span>
-                        <div class="d-meta">Just donated <span class="d-amount">₦${data.amount.toLocaleString()}</span></div>
+                        <div class="d-meta">Just now <span class="d-amount">₦${data.amount.toLocaleString()}</span></div>
                         ${data.comment ? `<div class="d-comment-text" style="background:white;">"${data.comment}"</div>` : ''}
                     </div>
                 </div>`;
@@ -189,8 +221,9 @@
                     amount: amount * 100,
                     ref: data.reference,
                     callback: function() {
-                        closeModal();
-                        alert("JazaakAllahu Khairan! for donating, May Allah Reward you.");
+                        // IMPROVEMENT 1: Show Success UI instead of Alert
+                        document.getElementById('donation-form').style.display = 'none';
+                        document.getElementById('success-message').style.display = 'block';
                     }
                 });
                 handler.openIframe();
@@ -198,26 +231,17 @@
                 alert("Error processing request. Please try again.");
             }
         }
-    </script>
-
+    </script> 
     <script>
         // DISABLE RIGHT CLICK
         document.addEventListener('contextmenu', event => event.preventDefault());
 
-        // DISABLE KEYBOARD SHORTCUTS (F12, Ctrl+U, Ctrl+Shift+I)
+        // DISABLE KEYBOARD SHORTCUTS
         document.onkeydown = function(e) {
-            if (e.keyCode == 123) { // F12
-                return false;
-            }
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Ctrl+Shift+I
-                return false;
-            }
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { // Ctrl+Shift+J
-                return false;
-            }
-            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Ctrl+U
-                return false;
-            }
+            if (e.keyCode == 123) { return false; } // F12
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; } // Ctrl+Shift+I
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } // Ctrl+Shift+J
+            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } // Ctrl+U
         }
     </script>
 </body>
