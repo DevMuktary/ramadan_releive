@@ -6,123 +6,13 @@
     <title>Ramadan Relief Fund - Abu Hayyan</title>
     
     <meta property="og:title" content="Ramadan Relief Fund - Managed by Abu Hayyan" />
-    <meta property="og:description" content="We are raising funds to support widows and orphans this Ramadan. No amount is too small." />
+    <meta property="og:description" content="We are raising funds to support widows and orphans this Ramadan. No amount is too small. Join me in this Sadaqah." />
     <meta property="og:image" content="https://<%= host %>/images/banner.png" /> 
     <meta property="og:url" content="https://<%= host %>" />
     <meta property="og:type" content="website" />
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary: #001232; 
-            --primary-light: #edf4ff; 
-            --whatsapp: #25D366;
-            --dark: #0f172a;
-            --gray: #64748b;
-            --bg-gray: #f8fafc;
-            --white: #ffffff;
-            --shadow: 0 4px 20px rgba(0, 18, 50, 0.08);
-            --radius: 12px;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--bg-gray);
-            color: var(--dark); 
-            padding-bottom: 100px;
-            line-height: 1.6;
-        }
-
-        /* NAV */
-        nav { background: var(--white); border-bottom: 1px solid #e2e8f0; padding: 16px 0; position: sticky; top: 0; z-index: 50; }
-        .nav-inner { max-width: 800px; margin: 0 auto; padding: 0 20px; font-weight: 800; font-size: 1.2rem; color: var(--primary); display: flex; align-items: center; gap: 10px; }
-
-        /* LAYOUT */
-        .container { max-width: 800px; margin: 0 auto; background: var(--white); min-height: 100vh; box-shadow: var(--shadow); }
-        .hero-wrapper { position: relative; width: 100%; height: 380px; background: #cbd5e1; }
-        .hero-img { width: 100%; height: 100%; object-fit: cover; }
-        .content { padding: 30px 30px 50px 30px; }
-
-        /* STATS CARD */
-        .stats-card { 
-            background: var(--white); 
-            border-radius: 16px; 
-            padding: 24px; 
-            box-shadow: 0 10px 30px rgba(0, 18, 50, 0.12); 
-            margin-bottom: 40px; 
-            margin-top: -60px; 
-            position: relative; 
-            z-index: 10;
-            border: 1px solid #f1f5f9;
-        }
-        .amt-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
-        .big-amt { font-size: 2.5rem; font-weight: 800; color: var(--primary); line-height: 1; }
-        .goal { color: var(--gray); font-size: 1rem; font-weight: 500; }
-        .progress-bg { background: #e2e8f0; height: 12px; border-radius: 20px; overflow: hidden; margin-bottom: 24px; }
-        .progress-fill { background: var(--primary); height: 100%; width: 0%; transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
-
-        /* BUTTONS */
-        .share-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .btn-share { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; text-decoration: none; font-size: 0.95rem; transition: transform 0.1s; }
-        
-        .btn-whatsapp { background: #ECFDF5; color: var(--whatsapp); border: 1px solid #25D366; }
-        .btn-donate-hero { background: var(--primary); color: white; border: none; }
-        .btn-share:active { transform: scale(0.98); }
-
-        /* STORY */
-        .campaign-story { margin-top: 40px; font-size: 1.1rem; color: #334155; }
-        .campaign-story p { margin-bottom: 1.5rem; }
-        .campaign-story blockquote { border-left: 4px solid var(--primary); margin: 30px 0; font-weight: 600; font-size: 1.2rem; color: var(--primary); padding: 20px; background: var(--primary-light); border-radius: 0 12px 12px 0; }
-
-        /* FEED */
-        .feed-container { margin-top: 50px; }
-        .feed-header { font-size: 1.4rem; font-weight: 800; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #f1f5f9; color: var(--primary); display: flex; align-items: center; gap: 10px; }
-        .donation-item { display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid #f1f5f9; animation: fadeIn 0.5s ease-out; }
-        .d-icon-box { width: 48px; height: 48px; background: var(--primary-light); color: var(--primary); border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .d-info { flex-grow: 1; }
-        .d-name { display: block; font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: 2px;}
-        .d-amount { color: var(--primary); font-weight: 700; }
-        .d-meta { color: var(--gray); font-size: 0.85rem; }
-        .d-comment-text { margin-top: 8px; font-size: 0.95rem; color: #475569; background: #f8fafc; padding: 10px; border-radius: 8px; font-style: italic; }
-
-        /* STICKY FOOTER */
-        .sticky-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--white); padding: 16px 24px; box-shadow: 0 -4px 20px rgba(0, 18, 50, 0.08); z-index: 100; display: flex; align-items: center; justify-content: center; border-top: 1px solid #e2e8f0; }
-        .footer-inner { width: 100%; max-width: 800px; display: flex; justify-content: space-between; align-items: center; }
-        .btn-donate-sticky { background: var(--primary); color: white; border: none; padding: 14px 32px; border-radius: 50px; font-weight: 700; cursor: pointer; }
-
-        /* COMPACT MODAL STYLES (UPDATED) */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 18, 50, 0.7); z-index: 200; display: none; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-        .modal-box { 
-            background: white; 
-            width: 95%; 
-            max-width: 400px; 
-            padding: 20px; /* Reduced padding */
-            border-radius: 16px; 
-            box-shadow: 0 20px 40px rgba(0, 18, 50, 0.2); 
-            animation: slideUp 0.3s;
-            max-height: 90vh; /* Prevent overflow on small screens */
-            overflow-y: auto;
-        }
-        .preset-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; margin-bottom: 15px; } /* Compact grid */
-        .btn-preset { padding: 10px 5px; border: 1px solid #cbd5e1; background: white; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem; text-align: center; }
-        .btn-preset.active { background: var(--primary); color: white; border-color: var(--primary); }
-        
-        .inp-group { margin-bottom: 10px; } /* Reduced margin */
-        .inp { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; outline: none; }
-        .btn-pay { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 800; font-size: 1.1rem; cursor: pointer; margin-top: 5px; }
-
-        @media (max-width: 600px) {
-            .hero-wrapper { height: 260px; }
-            .content { padding: 20px 20px 40px 20px; }
-            .stats-card { margin-top: -40px; padding: 20px; }
-            .big-amt { font-size: 2rem; }
-            .share-grid { grid-template-columns: 1fr; } /* Stack buttons on mobile */
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    </style>
+    <link rel="stylesheet" href="/css/style.css">
     
     <script src="https://js.paystack.co/v1/inline.js"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -157,10 +47,10 @@
                         <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592z"/></svg>
                         Share to WhatsApp
                     </a>
-                    <button onclick="openModal()" class="btn-share btn-donate-hero">
-                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        Donate Now
-                    </button>
+                    <a href="https://wa.me/?text=Assalamualaikum.%20I%20am%20supporting%20this%20Ramadan%20Relief%20Fund%20managed%20by%20Abu%20Hayyan.%20Please%20join%20me.%20https://<%= host %>" target="_blank" class="btn-share btn-status">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.646 5.646L7 10.293 4.354 7.646a.5.5 0 1 1 .708-.708l2 2 4-4a.5.5 0 0 1 .708.708z"/></svg>
+                        Add to Status
+                    </a>
                 </div>
             </div>
 
@@ -177,7 +67,7 @@
                 
                 <p>I will also reach out to some people offline and online, in shā’ Allāh. Can you do that too? So let us begin.</p>
                 
-                <p style="margin-top: 30px; font-weight: 700; color: var(--primary); font-size: 1.1rem; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+                <p class="signature">
                     — Managed by Abu Hayyan
                 </p>
             </div>
@@ -195,10 +85,7 @@
                             </div>
                             <div class="d-info">
                                 <span class="d-name"><%= d.donorName %></span>
-                                <div class="d-meta">
-                                    Donated <span class="d-amount">₦<%= d.amount.toLocaleString() %></span>
-                                    <span class="time-ago" data-time="<%= d.createdAt %>"></span>
-                                </div>
+                                <div class="d-meta">Donated <span class="d-amount">₦<%= d.amount.toLocaleString() %></span></div>
                                 <% if(d.comment) { %> 
                                     <div class="d-comment-text">"<%= d.comment %>"</div> 
                                 <% } %>
@@ -224,46 +111,50 @@
         <div class="modal-box">
             
             <div id="donation-form">
-                <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
-                    <h3 style="font-weight:800; font-size:1.2rem; color:var(--primary)">Contribution</h3>
-                    <span onclick="closeModal()" style="font-size:24px; cursor:pointer; color:#94a3b8">&times;</span>
+                <div class="modal-header">
+                    <h3 class="modal-title">Make a Contribution</h3>
+                    <span onclick="closeModal()" class="close-btn">&times;</span>
                 </div>
 
                 <div class="preset-grid">
-                    <div class="btn-preset" onclick="setPreset(1000, this)">1k</div>
-                    <div class="btn-preset" onclick="setPreset(2000, this)">2k</div>
-                    <div class="btn-preset" onclick="setPreset(5000, this)">5k</div>
-                    <div class="btn-preset" onclick="setPreset(10000, this)">10k</div>
+                    <div class="btn-preset" onclick="setPreset(1000, this)">₦1,000</div>
+                    <div class="btn-preset" onclick="setPreset(2000, this)">₦2,000</div>
+                    <div class="btn-preset" onclick="setPreset(5000, this)">₦5,000</div>
+                    <div class="btn-preset" onclick="setPreset(10000, this)">₦10,000</div>
                 </div>
 
                 <div class="inp-group">
-                    <input type="text" inputmode="numeric" pattern="[0-9]*" id="amt" class="inp" placeholder="Amount (₦)" required>
+                    <input type="text" inputmode="numeric" pattern="[0-9]*" id="amt" class="inp" placeholder="Other amount (₦)" required>
                 </div>
                 <div class="inp-group">
-                    <input type="email" id="email" class="inp" placeholder="Email" required>
+                    <input type="email" id="email" class="inp" placeholder="Email Address (Required)" required>
                 </div>
                 <div class="inp-group">
-                    <input type="text" id="name" class="inp" placeholder="Name (Optional)">
+                    <input type="text" id="name" class="inp" placeholder="Your Name (Optional)">
                 </div>
                 <div class="inp-group">
-                    <input type="text" id="comment" class="inp" placeholder="Prayer (Optional)">
+                    <input type="text" id="comment" class="inp" placeholder="Leave a prayer (Optional)">
                 </div>
 
                 <button onclick="pay()" class="btn-pay">DONATE NOW</button>
                 
-                <div style="text-align:center; font-size:0.75rem; color:#64748b; margin-top:10px;">
-                    Managed by Abu Hayyan. 100% to beneficiaries.
+                <div class="modal-trust-footer">
+                    <p>Managed by Abu Hayyan. 100% of funds go to beneficiaries.</p>
+                    <div class="trust-badge">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/></svg>
+                        Secure payment via Paystack
+                    </div>
                 </div>
             </div>
 
-            <div id="success-message" style="display:none; text-align:center; padding:10px;">
-                <div style="font-size:50px; margin-bottom:10px;">🎉</div>
-                <h3 style="color:var(--primary); font-weight:800; font-size:1.4rem; margin-bottom:10px;">JazaakAllahu Khairan!</h3>
-                <p style="color:#475569; font-size:0.95rem; line-height:1.4;">May Allah accept your sadaqah, purify your wealth, and grant you ease.</p>
-                <div style="margin-top:20px; padding:10px; background:var(--primary-light); border-radius:8px;">
-                    <p style="font-weight:700; color:var(--primary); font-size:0.9rem;">Managed by Abu Hayyan</p>
+            <div id="success-message">
+                <div class="success-icon">🎉</div>
+                <h3 class="success-title">JazaakAllahu Khairan!</h3>
+                <p class="success-desc">May Allah accept your sadaqah, purify your wealth, and grant you ease in this life and the hereafter.</p>
+                <div class="managed-badge">
+                    <p class="managed-text">Managed by Abu Hayyan</p>
                 </div>
-                <button onclick="closeModal()" class="btn-preset" style="margin-top:15px; width:100%; background:var(--bg-gray);">Close</button>
+                <button onclick="closeModal()" class="btn-preset" style="margin-top:20px; width:100%; background:var(--bg-gray);">Close Window</button>
             </div>
 
         </div>
@@ -272,33 +163,6 @@
     <script>
         const publicKey = "<%= publicKey %>";
         const socket = io();
-
-        // --- TIME AGO FUNCTION ---
-        function timeAgo(dateString) {
-            if(!dateString) return '';
-            const date = new Date(dateString);
-            const seconds = Math.floor((new Date() - date) / 1000);
-            
-            let interval = seconds / 31536000;
-            if (interval > 1) return Math.floor(interval) + " years ago";
-            interval = seconds / 2592000;
-            if (interval > 1) return Math.floor(interval) + " months ago";
-            interval = seconds / 86400;
-            if (interval > 1) return Math.floor(interval) + " days ago";
-            interval = seconds / 3600;
-            if (interval > 1) return Math.floor(interval) + " hours ago";
-            interval = seconds / 60;
-            if (interval > 1) return Math.floor(interval) + " mins ago";
-            return "Just now";
-        }
-
-        // Run on load to format existing dates
-        document.addEventListener("DOMContentLoaded", () => {
-            document.querySelectorAll('.time-ago').forEach(el => {
-                const raw = el.getAttribute('data-time');
-                if(raw) el.innerText = " • " + timeAgo(raw);
-            });
-        });
 
         function openModal() { 
             document.getElementById('modal').style.display = 'flex'; 
@@ -328,9 +192,7 @@
                     </div>
                     <div class="d-info">
                         <span class="d-name">${data.donorName}</span>
-                        <div class="d-meta">
-                            Donated <span class="d-amount">₦${data.amount.toLocaleString()}</span> • Just now
-                        </div>
+                        <div class="d-meta">Just now <span class="d-amount">₦${data.amount.toLocaleString()}</span></div>
                         ${data.comment ? `<div class="d-comment-text" style="background:white;">"${data.comment}"</div>` : ''}
                     </div>
                 </div>`;
@@ -368,15 +230,18 @@
                 alert("Error processing request. Please try again.");
             }
         }
-    </script>
-    
+    </script> 
+
     <script>
+        // DISABLE RIGHT CLICK
         document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // DISABLE KEYBOARD SHORTCUTS
         document.onkeydown = function(e) {
-            if (e.keyCode == 123) return false;
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
-            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+            if (e.keyCode == 123) { return false; } 
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } 
+            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } 
         }
     </script>
 </body>
