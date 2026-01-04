@@ -198,6 +198,25 @@
                 alert("Error processing request. Please try again.");
             }
         }
-    </script>
+<script>
+    // DISABLE RIGHT CLICK
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    // DISABLE KEYBOARD SHORTCUTS (F12, Ctrl+U, Ctrl+Shift+I)
+    document.onkeydown = function(e) {
+        if (e.keyCode == 123) { // F12
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Ctrl+Shift+I
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { // Ctrl+Shift+J
+            return false;
+        }
+        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Ctrl+U
+            return false;
+        }
+    }
+</script>
 </body>
 </html>
