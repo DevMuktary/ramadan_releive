@@ -1,7 +1,6 @@
 :root {
-    /* NEW COLOR SCHEME */
     --primary: #001232; /* Deep Royal Blue */
-    --primary-light: #edf4ff; /* Very pale blue for backgrounds */
+    --primary-light: #edf4ff;
     --whatsapp: #25D366;
     --dark: #0f172a;
     --gray: #64748b;
@@ -34,7 +33,7 @@ nav { background: var(--white); border-bottom: 1px solid #e2e8f0; padding: 16px 
 /* MAIN CONTENT */
 .content { padding: 30px 30px 50px 30px; }
 
-/* STATS CARD (The overlap box) */
+/* STATS CARD */
 .stats-card { 
     background: var(--white); 
     border-radius: 16px; 
@@ -76,8 +75,9 @@ nav { background: var(--white); border-bottom: 1px solid #e2e8f0; padding: 16px 
     background: var(--primary-light);
     border-radius: 0 12px 12px 0;
 }
+.signature { margin-top: 30px; font-weight: 700; color: var(--primary); font-size: 1.1rem; border-top: 1px solid #e2e8f0; padding-top: 20px; }
 
-/* --- NEW REDESIGNED DONATION FEED --- */
+/* FEED */
 .feed-container { margin-top: 50px; }
 .feed-header { 
     font-size: 1.4rem; 
@@ -97,7 +97,6 @@ nav { background: var(--white); border-bottom: 1px solid #e2e8f0; padding: 16px 
     border-bottom: 1px solid #f1f5f9; 
     animation: fadeIn 0.5s ease-out;
 }
-/* New Icon Style */
 .d-icon-box { 
     width: 48px; 
     height: 48px; 
@@ -113,7 +112,6 @@ nav { background: var(--white); border-bottom: 1px solid #e2e8f0; padding: 16px 
 .d-name { display: block; font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: 4px;}
 .d-amount { color: var(--primary); font-weight: 700; }
 .d-meta { color: var(--gray); font-size: 0.9rem; }
-/* New comment style - cleaner text */
 .d-comment-text { 
     margin-top: 8px; 
     font-size: 1rem; 
@@ -136,6 +134,9 @@ nav { background: var(--white); border-bottom: 1px solid #e2e8f0; padding: 16px 
 /* MODAL */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0, 18, 50, 0.7); z-index: 200; display: none; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
 .modal-box { background: white; width: 95%; max-width: 420px; padding: 30px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 18, 50, 0.2); animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.modal-header { display: flex; justify-content: space-between; margin-bottom: 20px; align-items: center; }
+.modal-title { font-weight: 800; font-size: 1.3rem; color: var(--primary); }
+.close-btn { font-size: 28px; cursor: pointer; color: #94a3b8; }
 
 /* PRESET BUTTONS */
 .preset-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
@@ -148,6 +149,18 @@ nav { background: var(--white); border-bottom: 1px solid #e2e8f0; padding: 16px 
 .inp:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-light); }
 .btn-pay { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 14px; font-weight: 800; font-size: 1.15rem; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
 .btn-pay:hover { background: #000a1f; }
+
+/* TRUST FOOTER IN MODAL */
+.modal-trust-footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 15px; border-top: 1px solid #f1f5f9; padding-top: 10px; }
+.trust-badge { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 5px; }
+
+/* SUCCESS MESSAGE */
+#success-message { display: none; text-align: center; padding: 20px; }
+.success-icon { font-size: 60px; margin-bottom: 15px; }
+.success-title { color: var(--primary); font-weight: 800; font-size: 1.6rem; margin-bottom: 10px; }
+.success-desc { color: #475569; font-size: 1.05rem; line-height: 1.5; }
+.managed-badge { margin-top: 25px; padding: 15px; background: var(--primary-light); border-radius: 12px; }
+.managed-text { font-weight: 700; color: var(--primary); }
 
 /* RESPONSIVE */
 @media (max-width: 600px) {
